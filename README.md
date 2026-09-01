@@ -1,3 +1,5 @@
+readme
+
 Nama : Chelsea Stania Passikha
 
 NPM : 2506587876

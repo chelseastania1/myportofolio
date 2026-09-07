@@ -119,10 +119,36 @@ h1, .brand {
     font-weight: 600;
 }
 
+.skills-container {
+  display: grid;
+  grid-template-areas: 
+    "header header header";
+  border: 1px solid var(--ink);
+  padding: 10px;
+  gap: 3px;
+  background-color: var(--accent);
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.skills-header {
+    background-color: var(--paper);
+    font-size: 0.85rem;
+    padding: 4px;
+    grid-area: header;
+    text-align: center;
+}
+
+.skill {
+    background-color: var(--paper);
+    padding: 4px;
+    text-align: center;
+}
+
 .social-links {
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
+    padding: 20px
 }
 
 .social-link {

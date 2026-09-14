@@ -13,3 +13,13 @@ Untuk mengevaluasi elemen yang perlu diubah, saya melihat apakah elemen tersebut
 
 Saya tidak menggunakan AI.
 Refleksi: Saat membuat section baru, saya dapat memilih antara flexbox dan grid. Saya memilih untuk menggunakan grid karena lebih mudah untuk disesuaikan dengan tampilan browser. Saya menghadapi masalah saat membuatnya karena saya belum sepenuhnya memahami cara mengedit grid. Agar saya lebih mengerti penggunaan grid, saya mencari tutorial pada situs Youtube.
+
+
+### Tugas 2
+1. Ketika pengguna membuka halaman portofolio, permintaan diterima urls.py proyek. Kemudian, permintaan tersebut dapat dikirimkan ke urls.py aplikasi. Aplikasi menyesuaikan url dengan views.py, yang berperan dalam mengambil data dari model. Setelah itu, data tersebut diterima oleh template dan ditampilkan pada browser.
+2. Data sebaiknya disimpan pada model agar data tersebut terpisah dari template yang mengatur tampilan. Akibatnya, data dapat diubah atau dihapus dengan mudah, tanpa perlu mengganti layout yang terdapat pada template.
+3. Fungsi makemigrations bertujuan untuk mendeteksi perubahan saat mengubah model, sedangkan fungsi migrate bertujuan untuk menmperbarui database agar perubahan tersebut tersimpan. Saat mengerjakan tugas ini, saya harus menjalankan kedua perintah tersebut ketika membuat class Education.
+
+AI Declaration: Saya menggunakan AI dengan platform ChatGPT saat mengerjakan tugas ini. Bagian yang dibantu adalah pembuatan class baru pada models.py.
+
+Log AI: https://chatgpt.com/share/6aa8143e-3ae8-83ec-a023-33fe65401a5e

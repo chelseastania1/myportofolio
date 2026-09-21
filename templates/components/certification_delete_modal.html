@@ -1,30 +1,30 @@
 <p class="experience-status">
     <button type="button"
             class="button button-danger"
-            popovertarget="delete-education-{{ education.id }}"
-            aria-label="Hapus {{ education.title }}"
+            popovertarget="delete-certification-{{ certification.id }}"
+            aria-label="Hapus {{ certification.title }}"
             title="Hapus proyek">
-        Hapus Informasi Pendidikan
+        Hapus Sertifikasi
     </button>
 </p>
-<div id="delete-education-{{ education.id }}"
+<div id="delete-certification-{{ certification.id }}"
      class="project-delete-modal"
      popover="auto"
      role="dialog"
      aria-modal="true"
-     aria-labelledby="delete-education-title-{{ education.id }}">
+     aria-labelledby="delete-certification-title-{{ certification.id }}">
     <button type="button"
             class="project-delete-modal__backdrop"
-            popovertarget="delete-education-{{ education.id }}"
+            popovertarget="delete-certification-{{ certification.id }}"
             popovertargetaction="hide"
             aria-label="Tutup konfirmasi hapus"></button>
     <div class="project-delete-modal__content">
         <button type="button"
                 class="project-delete-modal__close"
-                popovertarget="delete-education-{{ education.id }}"
+                popovertarget="delete-certification-{{ certification.id }}"
                 popovertargetaction="hide"
                 aria-label="Tutup konfirmasi hapus">×</button>
-        <h2 id="delete-project-title-{{ education.id }}">Hapus Informasi Pendidikan?</h2>
+        <h2 id="delete-project-title-{{ certification.id }}">Hapus Sertifikasi?</h2>
         <p>
             Apakah Anda yakin ingin menghapus
             <strong>{{ education.title }}</strong>?
@@ -32,9 +32,9 @@
         <div class="project-delete-modal__actions">
             <button type="button"
                     class="button button-secondary"
-                    popovertarget="delete-education-{{ education.id }}"
+                    popovertarget="delete-project-{{ certification.id }}"
                     popovertargetaction="hide">Batal</button>
-            <form method="post" action="{% url 'main:delete_education' education.id %}">
+            <form method="post" action="{% url 'main:delete_certification' certification.id %}">
                 {% csrf_token %}
                 <button type="submit" class="button button-danger">Ya, Hapus</button>
             </form>

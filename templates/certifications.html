@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block meta %}
+    <title>Certifications - {{ name }}</title>
+    {% endblock meta %}
+    {% block content %}
+
+<body>
+    <main>
+    <section class="experience-section" id="project">
+        <div class="container">
+            <p class="section-kicker">Sertifikasi yang saya miliki</p>
+            <div class="project-header">
+                <h1>Certifications</h1>
+                <a href="{% url 'main:create_certification' %}"
+                    class="button project-add-button">
+                    <span aria-hidden="true">+</span>
+                    Tambah Sertifikasi
+                </a>
+            </div>
+            <form method="get"
+                      action="{% url 'main:show_certifications' %}"
+                      class="project-search">
+                    <input type="search"
+                           name="title"
+                           value="{{ title_query }}"
+                           placeholder="Cari berdasarkan nama sertifikasi"
+                           class="project-search__input"
+                           aria-label="Cari berdasarkan sertifikasi">
+                    <button type="submit" class="button">Cari</button>
+                </form> 
+            <div class="experience-grid">
+                {% for certification in certification_list %}
+                    <article class="experience-card">
+                        <h2>{{ certification.title }}</h2>
+                        <p class="experience-description">
+                            {{ certification.description }}
+                        </p>
+                        {% include "components/certification_delete_modal.html" with certification=certification %}
+                    </article>
+                {% empty %}
+                    <p class="empty-state">
+                        Belum ada sertifikasi yang ditambahkan.
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+{% endblock content %}
+</html>

@@ -9,22 +9,22 @@
     <section class="experience-section" id="education">
         <div class="container">
             <p class="section-kicker">Pendidikan saya</p>
-            <div class="education-header">
+            <div class="project-header">
                 <h1>Education</h1>
                 <a href="{% url 'main:create_education' %}"
-                    class="button education-add-button">
+                    class="button project-add-button">
                     <span aria-hidden="true">+</span>
                     Tambah Pendidikan
                 </a>
             </div>
             <form method="get"
                       action="{% url 'main:show_education' %}"
-                      class="education-search">
+                      class="project-search">
                     <input type="search"
                            name="title"
                            value="{{ title_query }}"
                            placeholder="Cari berdasarkan nama lembaga pendidikan"
-                           class="education-search__input"
+                           class="project-search__input"
                            aria-label="Cari berdasarkan lembaga pendidikan">
                     <button type="submit" class="button">Cari</button>
                 </form> 
@@ -40,12 +40,12 @@
                         </p>
 
                         {% if education.is_ongoing %}
-                            <p class="education-status">Sedang berlangsung</p>
+                            <p class="project-status">Sedang berlangsung</p>
                         {% else %}
-                            <p class="education-status">Selesai</p>
+                            <p class="project-status">Selesai</p>
                         {% endif %}
-                         <div class="education-card-actions">
-                                <div class="education-actions">
+                         <div class="project-card-actions">
+                                <div class="project-actions">
                                     {% if education.education_url %}
                                         <a href="{{ education.education_url }}" class="button">Lihat Informasi Pendidikan</a>
                                     {% endif %}

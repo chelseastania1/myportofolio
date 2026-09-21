@@ -1,6 +1,7 @@
 from django.forms import ModelForm, TextInput, Textarea, URLInput, NumberInput
+from django import forms
 
-from main.models import Education
+from main.models import Education, Certifications
 
 class EducationForm(ModelForm):
     class Meta:
@@ -48,5 +49,46 @@ class EducationForm(ModelForm):
                 attrs={
                     "placeholder": "2025",
                 }
+            ),
+        }
+
+class CertificationForm(forms.ModelForm):
+    class Meta:
+        model = Certifications
+        fields = [
+            "title",
+            "description",
+            "issued_at",
+            "expires_at",
+        ]
+
+        labels = {
+            "title": "Nama Sertifikasi",
+            "description": "Deskripsi Sertifikasi",
+            "issued_at": "Tanggal Mulai Berlaku",
+            "expires_at": "Berlaku Hingga",
+        }
+
+        widgets = {
+            "title": TextInput(
+                attrs={
+                    "placeholder": "Nama Sertifikasi",
+                    "maxlength": 255,
+                }
+            ),
+            "description": Textarea(
+                attrs={
+                    "placeholder": "Deskripsi Sertifikasi",
+                    "rows": 3,
+                }
+            ),
+            "issued_at": forms.DateInput(
+            format="%Y-%m-%d",
+            attrs={"type": "date"},
+            ),
+
+            "expires_at": forms.DateInput(
+            format="%Y-%m-%d",
+            attrs={"type": "date"},
             ),
         }

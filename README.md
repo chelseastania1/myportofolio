@@ -23,3 +23,15 @@ Refleksi: Saat membuat section baru, saya dapat memilih antara flexbox dan grid.
 AI Declaration: Saya menggunakan AI dengan platform ChatGPT saat mengerjakan tugas ini. Bagian yang dibantu adalah pembuatan class baru pada models.py.
 
 Log AI: https://chatgpt.com/share/6aa8143e-3ae8-83ec-a023-33fe65401a5e
+
+### Tugas 3
+1. ModelForm digunakan agar field dari model langsung terintergrasi dengan form. Akibatnya, kode yang perlu ditulis berkurang.
+
+{% csrf_token %} harus ditambahkan untuk mengurangi risiko Cross Site Request Forgery (CSRF). CSRF adalah serangan yang terjadi ketika server menerima request yang kelihatannya berasal dari pengguna, namun sebenarnya berasal dari sumber lain seperti website berbahaya.
+
+2. JSON memiliki struktur yang lebih ringkas dibandingkan XML. Selain itu, JSON lebih cocok digunakan dengan JavaScript karena strukturnya yang serupa.
+
+3. Saat view dijalankan, view mengambil data dari database. Data tersebut belum berupa JSON ketika diambil. Jadi, data tersebut diubah menjadi JSON dengan serialization. Serialization perlu terjadi sebelum data dikembalikan agar data tersebut dapat disajikan dalam format yang diperlukan sistem.
+
+AI declaration: Saya tidak menggunakan AI.
+Refleksi: Saat membuat class dan form baru, saya mendapatkan beberapa error. Ketika mendapatkan error tersebut, saya dapat menyelesaikannya dengan mencari solusi di Stack Overflow dan situs serupa.

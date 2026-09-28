@@ -51,7 +51,7 @@
                                     {% if education.education_url %}
                                         <a href="{{ education.education_url }}" class="button">Lihat Informasi Pendidikan</a>
                                     {% endif %}
-                                    {% include "components/project_star.html" with project=project %}
+                                        {% include "components/education_star.html" with education=education %}
                                     {% if user.is_superuser %}
                                         {% include "components/education_delete_modal.html" with education=education %}
                                     {% endif %}

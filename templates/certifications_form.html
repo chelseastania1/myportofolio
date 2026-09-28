@@ -1,15 +1,27 @@
 {% extends "base.html" %}
 {% block meta %}
+{% if certification %}
+    <title>Edit Certification - {{ name }}</title>
+{% else %}
     <title>Add Certification - {{ name }}</title>
+{% endif %}
 {% endblock meta %}
 {% block content %}
     <main>
         <section class="experience-section">
             <div class="container">
-                <h1>Add New Certification</h1>
+                {% if certification %}
+                    <h1>Edit Existing Certification</h1>
+                {% else %}
+                    <h1>Add New Certification</h1>
+                {% endif %}
                 <form method="post"
-                      action="{% url 'main:create_certification' %}"
-                      class="project">
+                        action="{% if certification %}
+                                    {% url 'main:edit_certification' certification_id=certification.id %}
+                                {% else %}
+                                    {% url 'main:create_certification' %}
+                                {% endif %}"
+                        class="project">
                     {% csrf_token %}
                     {% for field in form %}
                         <div class="form-group">
@@ -20,7 +32,11 @@
                             {% endfor %}
                         </div>
                     {% endfor %}
-                    <button type="submit" class="button">Tambah Sertifikasi</button>
+                    {% if certification %}
+                        <button type="submit" class="button">Ganti Sertifikasi</button>
+                    {% else %}
+                        <button type="submit" class="button">Tambah Sertifikasi</button>
+                    {% endif %}
                     <a href="{% url 'main:show_certifications' %}" class="button button-secondary">Batal</a>
                 </form>
             </div>

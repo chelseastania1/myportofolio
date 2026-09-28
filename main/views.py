@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import PermissionDenied
 from main.forms import EducationForm, CertificationForm
 from main.models import Experience, Education, Certifications
@@ -108,6 +108,7 @@ def show_certifications(request):
     }
     return render(request, "certifications.html", context)
 
+@permission_required("main.add_certifications", raise_exception=True)
 def create_certification(request):
     form = CertificationForm(request.POST or None)
 
@@ -119,6 +120,28 @@ def create_certification(request):
     context = {
         "name": "Chelsea Stania Passikha",
         "form": form,
+    }
+    return render(request, "certifications_form.html", context)
+
+@permission_required("main.change_certifications", raise_exception=True)
+def edit_certification(request, certification_id):
+    certification = get_object_or_404(Certifications, pk=certification_id)
+    form = CertificationForm(request.POST, instance=certification)
+
+    if request.method == "POST":
+        form = CertificationForm(request.POST, instance=certification)
+    if form.is_valid():
+        form.save()
+        messages.success(request, "Informasi sertifikasi berhasil diubah!")
+        return redirect("main:show_certifications")
+    
+    else:
+        form = CertificationForm(request.POST, instance=certification)
+
+    context = {
+        "name": "Chelsea Stania Passikha",
+        "form": form,
+        "certification": certification,
     }
     return render(request, "certifications_form.html", context)
 
@@ -134,6 +157,7 @@ def get_certification_json(request):
     certifications_json = serializers.serialize("json", certifications)
     return HttpResponse(certifications_json, content_type="application/json")
 
+@permission_required("main.delete_certifications", raise_exception=True)
 def delete_certification(request, certification_id):
     certification = get_object_or_404(Certifications, pk=certification_id)
 
@@ -194,7 +218,7 @@ def logout_user(request):
     return response
 
 @login_required(login_url="/login/")
-def toggle_star(request, education_id):
+def toggle_education_star(request, education_id):
     education = get_object_or_404(Education, pk=education_id)
 
     if request.method == "POST":
@@ -206,4 +230,16 @@ def toggle_star(request, education_id):
             education.starred_by.add(request.user)
 
     return redirect("main:show_education")
+
+@login_required(login_url="/login/")
+def toggle_certification_star(request, certification_id):
+    certification = get_object_or_404(Certifications, pk=certification_id)
+
+    if request.method == "POST":
+        if request.user in certification.starred_by.all():
+            certification.starred_by.remove(request.user)
+        else:
+            certification.starred_by.add(request.user)
+
+    return redirect("main:show_certifications")
 

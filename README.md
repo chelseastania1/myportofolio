@@ -4,6 +4,49 @@ NPM : 2506587876
 
 Kelas : PBP F
 
+# Proyek Portofolio Pribadi
+
+## Setup Proyek
+1. Clone repositori ini
+```bash
+    git clone https://github.com/chelseastania1/myportofolio
+```
+2. Buat virtual environment
+
+    Windows:
+```bash    
+    python -m venv env<br>
+    env\Scripts\activate
+```
+
+    
+Unix:
+
+
+```bash python3 -m venv env<br>
+    source env/bin/activate
+```
+
+3. Siapkan dependencies
+```bash
+    pip install -r requirements.txt
+```
+
+4. Jalankan migration database
+```bash
+    python manage.py makemigrations
+    python manage.py migrate
+```
+
+5. Jalankan server
+```bash
+    python manage.py runserver
+```
+
+6. Akses proyek secara lokal<br>
+    Buka `localhost:8000`
+
+
 ### Tugas 1
 
 1. Pada tugas ini, saya tidak menambahkan elemen semantik HTML baru, namun saya menggunakan elemen <section> yang sudah tersedia dari tutorial 1. Elemen tersebut membantu dalam membuat web dengan mengelompokkan elemen di dalamnya. Akibatnya, elemen-elemen tersebut dapat diletakkan di sisi kiri foto.
@@ -35,3 +78,23 @@ Log AI: https://chatgpt.com/share/6aa8143e-3ae8-83ec-a023-33fe65401a5e
 
 AI declaration: Saya tidak menggunakan AI.
 Refleksi: Saat membuat class dan form baru, saya mendapatkan beberapa error. Ketika mendapatkan error tersebut, saya dapat menyelesaikannya dengan mencari solusi di Stack Overflow dan situs serupa.
+
+### Tugas 4
+
+### Progres mingguan:
+- Membuat user roles:
+
+    Pengguna tidak login: Bisa membaca data.
+
+    Pengguna yang login: Bisa membaca data dan memberikan star.
+
+    Editor: Memiliki hak pengguna yang bisa login dan dapat mengubah data.
+
+    Superuser/Pemilik portofolio: Memiliki hak editor, serta dapat membuat dan menghapus data.
+
+- Menambahkan fitur star dan update data pada bagian sertifikasi
+
+
+AI Declaration:
+Saya menggunakan bantuan AI dengan platform ChatGPT untuk tugas ini. Bagian yang dibantu adalah pembuatan user role baru dan form untuk mengubah data.
+https://chatgpt.com/share/6aba7f34-4db0-83ec-8062-a1d0930f0bd3

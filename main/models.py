@@ -43,7 +43,7 @@ class Education(models.Model):
     start_year = models.IntegerField(blank=True, null=True)
     end_year = models.IntegerField(blank=True, null=True)
     starred_by = models.ManyToManyField(
-        User, related_name="starred_projects", blank=True
+        User, related_name="starred_education", blank=True
     )
     def __str__(self):
         return self.title
@@ -58,5 +58,9 @@ class Certifications(models.Model):
     description = models.TextField()
     issued_at = models.DateField()
     expires_at = models.DateField(blank=True, null=True)
+    starred_by = models.ManyToManyField(
+            User, related_name="starred_certifications", blank=True
+        )
     def __str__(self):
         return self.title
+    

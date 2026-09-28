@@ -11,11 +11,13 @@
             <p class="section-kicker">Sertifikasi yang saya miliki</p>
             <div class="project-header">
                 <h1>Certifications</h1>
+                {% if user.is_superuser%}
                 <a href="{% url 'main:create_certification' %}"
                     class="button project-add-button">
                     <span aria-hidden="true">+</span>
                     Tambah Sertifikasi
                 </a>
+                {% endif %}
             </div>
             <form method="get"
                       action="{% url 'main:show_certifications' %}"
@@ -35,7 +37,28 @@
                         <p class="experience-description">
                             {{ certification.description }}
                         </p>
-                        {% include "components/certification_delete_modal.html" with certification=certification %}
+                        <div class="project-actions">
+                            {% if certification.certification_url %}
+                                <a href="{{ certification.certification_url }}" class="button">Lihat Sertifikasi</a>
+                            {% endif %}
+                                {% include "components/certification_star.html" with certification=certification %}
+                            {% if perms.main.add_certifications %}
+                                <a href="{% url 'main:create_certification' %}"
+                                class="button project-add-button">
+                                <span aria-hidden="true">+</span>
+                                Tambah Sertifikasi
+                                </a>
+                            {% endif %}
+                            {% if perms.main.change_certifications %}
+                                <a href="{% url 'main:edit_certification' certification_id=certification.id %}"
+                                    class="button project-add-button">
+                                    Ubah Sertifikasi
+                                </a>
+                            {% endif %}
+                            {% if user.is_superuser %}
+                                {% include "components/certification_delete_modal.html" with certification=certification %}
+                            {% endif %}                                                     
+                        </div>
                     </article>
                 {% empty %}
                     <p class="empty-state">

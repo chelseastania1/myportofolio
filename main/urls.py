@@ -15,7 +15,8 @@ from main.views import (show_main,
                         login_user,
                         logout_user, 
                         toggle_education_star,
-                        toggle_certification_star
+                        toggle_certification_star,
+                        create_education_ajax,
                         )
 
 app_name = "main"
@@ -37,4 +38,5 @@ urlpatterns = [
     path("logout/", logout_user, name="logout"),
     path("education/<uuid:education_id>/star/", toggle_education_star, name="toggle_education_star",),
     path("certifications/<uuid:certification_id>/star/", toggle_certification_star, name="toggle_certification_star",),
+    path("education/add-ajax/", create_education_ajax, name="create_education_ajax"),
 ]

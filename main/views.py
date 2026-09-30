@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.contrib import messages
 from django.core import serializers
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import PermissionDenied
+from django.views.decorators.http import require_POST
 from main.forms import EducationForm, CertificationForm
 from main.models import Experience, Education, Certifications
 import datetime
@@ -35,18 +36,10 @@ def show_experience(request):
     return render(request, "experience.html", context)
 
 def show_education(request):
-    json_response = get_education_json(request)
-
-    education = serializers.deserialize(
-        "json",
-        json_response.content.decode("utf-8"),
-    )
-    education = [education.object for education in education]
     title_query = request.GET.get("title", "").strip()
 
     context = {
         "name": "Chelsea Stania Passikha",
-        "education_list": education,
         "title_query": title_query,
     }
     return render(request, "education.html", context)
@@ -70,13 +63,34 @@ def create_education(request):
 
 def get_education_json(request):
     title_query = request.GET.get("title", "").strip()
-    education = Education.objects.all()
+    education = Education.objects.prefetch_related('starred_by').all()
 
     if title_query:
         education = education.filter(title__icontains=title_query)
 
-    education_json = serializers.serialize("json", education, use_natural_foreign_keys=True)
-    return HttpResponse(education_json, content_type="application/json")
+    # Konstruksi data JSON secara manual agar bisa menyisipkan logika Star
+    data = []
+    for education in education:
+        starred_users = education.starred_by.all()
+        is_starred = request.user in starred_users if request.user.is_authenticated else False
+        starred_by_names = ", ".join([u.username for u in starred_users])
+
+        data.append({
+            "pk": str(education.id),
+            "fields": {
+                "title": education.title,
+                "description": education.description,
+                "category": education.category,
+                "start_year": education.start_year,
+                "end_year": education.end_year,
+                "star_count": starred_users.count(),
+                "is_starred": is_starred,
+                "starred_by_names": starred_by_names,
+
+            }
+        })
+
+    return JsonResponse(data, safe=False)
 
 @login_required(login_url="/login/")
 def delete_education(request, education_id):
@@ -177,7 +191,7 @@ def register(request):
         return redirect("main:login")
 
     context = {
-        "name": "Burhan",
+        "name": "Chelsea Stania Passikha",
         "form": form,
     }
     return render(request, "register.html", context)
@@ -193,7 +207,7 @@ def login_user(request):
         return response
 
     context = {
-        "name": "Burhan",
+        "name": "Chelsea Stania Passikha",
         "form": form,
     }
     return render(request, "login.html", context)
@@ -243,3 +257,30 @@ def toggle_certification_star(request, certification_id):
 
     return redirect("main:show_certifications")
 
+def show_education(request):
+    title_query = request.GET.get("title", "").strip()
+
+    context = {
+        "name": "Chelsea Stania Passikha",
+        "title_query": title_query,
+        "form": EducationForm(),
+    }
+    return render(request, "education.html", context)
+
+@require_POST
+def create_education_ajax(request):
+    if not request.user.is_superuser:
+        return JsonResponse(
+            {"message": "Hanya pemilik portofolio yang dapat menambahkan pendidikan."},
+            status=403,
+        )
+
+    form = EducationForm(request.POST)
+    if form.is_valid():
+        education = form.save()
+        return JsonResponse(
+            {"message": "Informasi pendidikan berhasil ditambahkan.", "pk": str(education.id)},
+            status=201,
+        )
+
+    return JsonResponse({"errors": form.errors.get_json_data()}, status=400)

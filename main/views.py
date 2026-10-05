@@ -41,6 +41,7 @@ def show_education(request):
     context = {
         "name": "Chelsea Stania Passikha",
         "title_query": title_query,
+        "form": CertificationForm,
     }
     return render(request, "education.html", context)
 
@@ -106,18 +107,10 @@ def delete_education(request, education_id):
     return redirect("main:show_education")
 
 def show_certifications(request):
-    json_response = get_certification_json(request)
-
-    certifications = serializers.deserialize(
-        "json",
-        json_response.content.decode("utf-8"),
-    )
-    certifications = [certification.object for certification in certifications]
     title_query = request.GET.get("title", "").strip()
 
     context = {
         "name": "Chelsea Stania Passikha",
-        "certification_list": certifications,
         "title_query": title_query,
     }
     return render(request, "certifications.html", context)
@@ -161,15 +154,33 @@ def edit_certification(request, certification_id):
 
 def get_certification_json(request):
     title_query = request.GET.get("title", "").strip()
-    certifications = Certifications.objects.all()
+    certifications = Certifications.objects.prefetch_related('starred_by').all()
 
     if title_query:
-        certifications = Certifications.objects.filter(
-            title__icontains=title_query
-        )
+        certifications = certifications.filter(title__icontains=title_query)
 
-    certifications_json = serializers.serialize("json", certifications)
-    return HttpResponse(certifications_json, content_type="application/json")
+    # Konstruksi data JSON secara manual agar bisa menyisipkan logika Star
+    data = []
+    for certifications in certifications:
+        starred_users = certifications.starred_by.all()
+        is_starred = request.user in starred_users if request.user.is_authenticated else False
+        starred_by_names = ", ".join([u.username for u in starred_users])
+
+        data.append({
+            "pk": str(certifications.id),
+            "fields": {
+                "title": certifications.title,
+                "description": certifications.description,
+                "issued_at": certifications.issued_at,
+                "expires_at": certifications.expires_at,
+                "star_count": starred_users.count(),
+                "is_starred": is_starred,
+                "starred_by_names": starred_by_names,
+
+            }
+        })
+
+    return JsonResponse(data, safe=False)
 
 @permission_required("main.delete_certifications", raise_exception=True)
 def delete_certification(request, certification_id):
@@ -198,7 +209,6 @@ def register(request):
 
 def login_user(request):
     form = AuthenticationForm(request, data=request.POST or None)
-
     if request.method == "POST" and form.is_valid():
         user = form.get_user()
         login(request, user)
@@ -280,6 +290,28 @@ def create_education_ajax(request):
         education = form.save()
         return JsonResponse(
             {"message": "Informasi pendidikan berhasil ditambahkan.", "pk": str(education.id)},
+            status=201,
+        )
+
+    return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
+
+from django.views.decorators.http import require_POST
+
+...
+
+@require_POST
+def create_certification_ajax(request):
+    if not request.user.is_superuser:
+        return JsonResponse(
+            {"message": "Hanya pemilik portofolio yang dapat menambahkan sertifikasi."},
+            status=403,
+        )
+
+    form = CertificationForm(request.POST)
+    if form.is_valid():
+        project = form.save()
+        return JsonResponse(
+            {"message": "Sertifikasi berhasil ditambahkan.", "pk": str(project.id)},
             status=201,
         )
 

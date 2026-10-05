@@ -232,18 +232,6 @@
         }, SEARCH_DEBOUNCE_DELAY);
     });
 
-    function searchEducation() {
-    fetchEducation(searchInput.value.trim());
-    }
-
-    searchInput.addEventListener("input", function() {
-        clearTimeout(searchDebounceTimer);
-
-        searchDebounceTimer = setTimeout(function() {
-            searchEducation();
-            }, SEARCH_DEBOUNCE_DELAY);
-    });
-
     searchForm.addEventListener("submit", function(event) {
         event.preventDefault();
         clearTimeout(searchDebounceTimer);

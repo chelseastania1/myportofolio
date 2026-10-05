@@ -98,3 +98,20 @@ Refleksi: Saat membuat class dan form baru, saya mendapatkan beberapa error. Ket
 AI Declaration:
 Saya menggunakan bantuan AI dengan platform ChatGPT untuk tugas ini. Bagian yang dibantu adalah pembuatan user role baru dan form untuk mengubah data.
 https://chatgpt.com/share/6aba7f34-4db0-83ec-8062-a1d0930f0bd3
+
+### Tugas 5
+
+### Progres mingguan:
+
+- Menambahkan notifikasi toast dan debouncing untuk search
+- Implementasi AJAX untuk menambahkan dan menampilkan data
+
+Pertanyaan Refleksi:
+1. Debouncing adalah teknik untuk menunda berjalannya suatu fungsi sampai pengguna selesai melakukan aktivitasnta. Pada fitur search, debouncing digunakan untuk mengurangi jumlah request yang dikirim ke server.
+
+2. fetch() digunakan untuk mengembalikan sebuah Promise yang digunakan untuk menghasilkan objek Response. Await berfungsi untuk menunggu hingga fetch() selesai sebelum melanjutkan eksekusi kode. Tanpa await, Promise akan berjalan sebelum menghasilkan Response dan kode selanjutnya akan langsung dijalankan.
+
+3. XSS adalah serangan yang terjadi ketika penyerang memasukkan kode pada halaman web, misalnya melalui form. Data yang ditampilkan dengan AJAX/JavaScript lebih rentan terhadap serangan ini karena Django dapat melakukan auto-escaping. Data yang diterima melalui AJAX/JavaScript dapat dijalankan sebagai HTML jika escapeHTML tidak diterapkan.
+
+AI Declaration:
+Saya tidak menggunakan AI minggu ini. Untuk menyelesaikan masalah pada tugas ini, saya membaca ulang tutorial dan mencari solusi pada forum seperti Stack Overflow dan Forum Django.

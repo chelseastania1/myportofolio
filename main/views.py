@@ -35,7 +35,7 @@ def show_experience(request):
     }
     return render(request, "experience.html", context)
 
-def show_education(request):
+def show_certification(request):
     title_query = request.GET.get("title", "").strip()
 
     context = {
@@ -43,7 +43,7 @@ def show_education(request):
         "title_query": title_query,
         "form": CertificationForm,
     }
-    return render(request, "education.html", context)
+    return render(request, "certifications.html", context)
 
 @login_required(login_url="/login/")
 def create_education(request):
@@ -270,11 +270,22 @@ def toggle_certification_star(request, certification_id):
 def show_education(request):
     title_query = request.GET.get("title", "").strip()
 
+    education_list = Education.objects.prefetch_related(
+        "starred_by"
+    ).all()
+
+    if title_query:
+        education_list = education_list.filter(
+            title__icontains=title_query
+        )
+
     context = {
         "name": "Chelsea Stania Passikha",
         "title_query": title_query,
         "form": EducationForm(),
+        "education_list": education_list,
     }
+
     return render(request, "education.html", context)
 
 @require_POST

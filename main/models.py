@@ -56,7 +56,7 @@ class Certifications(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    issued_at = models.DateField()
+    issued_at = models.DateField(blank=True, null=True)
     expires_at = models.DateField(blank=True, null=True)
     starred_by = models.ManyToManyField(
             User, related_name="starred_certifications", blank=True

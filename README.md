@@ -115,3 +115,23 @@ Pertanyaan Refleksi:
 
 AI Declaration:
 Saya tidak menggunakan AI minggu ini. Untuk menyelesaikan masalah pada tugas ini, saya membaca ulang tutorial dan mencari solusi pada forum seperti Stack Overflow dan Forum Django.
+
+### Tugas 6
+
+### Progres mingguan:
+- Menambahkan serializer untuk class Certifications
+- Menerapkan IsPortfolioOwnerOrEditorOrReadOnly
+- Membuat API view untuk class Certifications
+
+Pertanyaan Refleksi:
+1. REST adalah  gaya arsitektur untuk merancang web API agar pertukaran data antara klien dan server lebih konsisten. REST memiliki beberapa prinsip, di antaranya: data diperlakukan sebagai resource, HTTP method menyatakan tindakan, serta klien dan server bertukar representasi data.
+
+2. Peran serializer dalam Django REST Framework adalah mengubah data menjadi format JSON. Keuntungan dari serializer dibandingkan JsonResponse adalah serializer mendukung validasi tanpa harus dibuat secara manual. Selain itu, serializer mendukung konversi objek ke JSON tanpa pembuatan dictionary.
+
+3. Autentikasi adalah pemeriksaan peran pengguna yang sedang mengakses aplikasi, sedangkan otorisasi adalah proses untuk menentukan apabila pengguna tersebut dapat menggunakan fitur tertentu. Hak akses harus diperiksa dengan permission class karena pengguna tetap dapat mengakses endpoint API dengan mengirimkan request. Menyembunyikan tombol hanya mengubah tampilan di browser.
+
+4. SessionAuthentication berfungsi untuk mengenali pengguna. Session cookie yang disimpan dapat terkirim jika situs lain mengirimkan request. Oleh karena itu, CSRF diperlukan untuk memastikan bahwa request tersebut memiliki token yang valid. Test yang memakai force_authenticate tidak cukup untuk membuktikan bahwa perlindungan CSRF berjalan karena langsung menetapkan pengguna yang terautentikasi tanpa memeriksa keberhasilan mekanisme perlindungan CSRF.
+
+AI Declaration:
+Saya tidak menggunakan AI minggu ini. Untuk menyelesaikan masalah pada tugas ini, saya membaca ulang tutorial dan mencari solusi pada forum seperti Stack Overflow dan Forum Django.
+
